@@ -29,15 +29,17 @@ var timer;
 var timerText;
 var jogador;
 var cena1 = new Phaser.Scene("Cena 1");
-
+var diamante 
+var contador
 // ===============================================================================
 // [Arthur] Iniciando a função Preload, para carregar os arquivos iniciais da cena.
 cena1.preload = function () {
   // [Arthur] Carregando imagens para a cena.
-  this.load.image("sky", "./assets/plano de fundo.png");
+  this.load.image("sky", "./assets/fundo.png");
   this.load.image("ground", "./assets/plataformagelo.png");
   this.load.image("wall", "./assets/plataformagelovertical.png");
   this.load.image("slab", "./assets/plataformagelohorizontalmeiobloco.png");
+  this.load.image("diamante", "./assets/diamante.png");
 
   // [Arthur] Carregando audios para a cena.
   // this.load.audio("musica", "./assets/musica0.mp3");
@@ -72,7 +74,7 @@ cena1.create = function () {
   // [Arthur] Incluido o som da musica a cena, e em seguida dando play.
   // trilha = this.sound.add("musica");
   // trilha.play();
-
+contador = 0
   // [Arthur] Incluindo os sons de efeito a cena.
   pular = this.sound.add("pular");
 
@@ -89,6 +91,9 @@ cena1.create = function () {
   });
   gate.anims.play("gateon");
 
+
+  diamante = this.physics.add.image(400, 420, "diamante").setImmovable(true);
+  diamante.body.setAllowGravity(false);
   // [Arthur] Incluindo a sprite de água a cena e em seguinda, criando a animação.
   water = this.physics.add.sprite(222, 382, "water");
   this.anims.create({
@@ -254,6 +259,9 @@ cena1.create = function () {
   this.physics.add.collider(gate, platforms, null, null, this);
   this.physics.add.overlap(player1, gate, goal, null, this);
   this.physics.add.overlap(player2, gate, goal, null, this);
+  this.physics.add.overlap(player1, diamante, pegar_diamante, null, this);
+  this.physics.add.overlap(player2, diamante, pegar_diamante, null, this);
+
 
   // [Arthur] Função para avançar a cena, posteriormente será trocada por um evento de colisão.
   this.input.keyboard.on(
@@ -391,7 +399,11 @@ cena1.update = function () {
       x: player2.body.x,
       y: player2.body.y + 10,
     });
-  }
+}
+    if (contador === 1){
+      this.scene.start(cena2)
+      }
+  
 
   // Verifica se os dois jogadores estão no portal
   // Se sim, saltam para a próxima cena
@@ -437,6 +449,12 @@ function goal(player, gate) {
     player2Goal = true
     console.log("Jogador 2 no portal...")
   }
+}
+
+function pegar_diamante(player, diamante) {
+  diamante.disableBody(true, true);
+  contador =+ 1
+  console.log(contador)
 }
 
 // ================================================
