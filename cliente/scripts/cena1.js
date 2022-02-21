@@ -47,12 +47,12 @@ cena1.preload = function () {
 
   // [Arthur] Carregando sprites para a cena.
   this.load.spritesheet("dude", "./assets/dino1.png", {
-    frameWidth: 24,
-    frameHeight: 24,
+    frameWidth: 32,
+    frameHeight: 32,
   });
   this.load.spritesheet("dude2", "./assets/dino1.png", {
-    frameWidth: 24,
-    frameHeight: 24,
+    frameWidth: 32,
+    frameHeight: 32,
   });
   this.load.spritesheet("water", "./assets/liquido.agua.png", {
     frameWidth: 128,
@@ -93,6 +93,12 @@ contador = 0
 
 
   diamante = this.physics.add.image(400, 420, "diamante").setImmovable(true);
+  diamante.body.setAllowGravity(false);
+  diamante = this.physics.add.image(750, 550, "diamante").setImmovable(true);
+  diamante.body.setAllowGravity(false);
+  diamante = this.physics.add.image(750, 520, "diamante").setImmovable(true);
+  diamante.body.setAllowGravity(false);
+  diamante = this.physics.add.image(720, 455, "diamante").setImmovable(true);
   diamante.body.setAllowGravity(false);
   // [Arthur] Incluindo a sprite de água a cena e em seguinda, criando a animação.
   water = this.physics.add.sprite(222, 382, "water");
