@@ -29,7 +29,7 @@ var timer;
 var timerText;
 var jogador;
 var cena1 = new Phaser.Scene("Cena 1");
-var diamante 
+var diamantes
 var contador
 // ===============================================================================
 // [Arthur] Iniciando a função Preload, para carregar os arquivos iniciais da cena.
@@ -91,7 +91,12 @@ contador = 0
   });
   gate.anims.play("gateon");
 
+  diamantes = this.physics.add.staticGroup();
+  //diamantes.body.setAllowGravity(false);
+  diamantes.create(400, 420, "diamante");
+  diamantes.create(750, 550, "diamante");
 
+  /*
   diamante = this.physics.add.image(400, 420, "diamante").setImmovable(true);
   diamante.body.setAllowGravity(false);
   diamante = this.physics.add.image(750, 550, "diamante").setImmovable(true);
@@ -100,6 +105,8 @@ contador = 0
   diamante.body.setAllowGravity(false);
   diamante = this.physics.add.image(720, 455, "diamante").setImmovable(true);
   diamante.body.setAllowGravity(false);
+  */
+
   // [Arthur] Incluindo a sprite de água a cena e em seguinda, criando a animação.
   water = this.physics.add.sprite(222, 382, "water");
   this.anims.create({
@@ -203,13 +210,13 @@ contador = 0
   // [Arthur] Incluindo as funções de movimentação do personagem Nº1.
   this.anims.create({
     key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frames: this.anims.generateFrameNumbers("dude", { start: 11, end: 21 }),
     frameRate: 10,
     repeat: -1,
   });
   this.anims.create({
     key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 10 }),
     frameRate: 10,
     repeat: -1,
   });
@@ -265,8 +272,8 @@ contador = 0
   this.physics.add.collider(gate, platforms, null, null, this);
   this.physics.add.overlap(player1, gate, goal, null, this);
   this.physics.add.overlap(player2, gate, goal, null, this);
-  this.physics.add.overlap(player1, diamante, pegar_diamante, null, this);
-  this.physics.add.overlap(player2, diamante, pegar_diamante, null, this);
+  this.physics.add.overlap(player1, diamantes, pegar_diamante, null, this);
+  this.physics.add.overlap(player2, diamantes, pegar_diamante, null, this);
 
 
   // [Arthur] Função para avançar a cena, posteriormente será trocada por um evento de colisão.
@@ -406,7 +413,7 @@ cena1.update = function () {
       y: player2.body.y + 10,
     });
 }
-    if (contador === 1){
+    if (contador === 2){
       this.scene.start(cena2)
       }
   
@@ -459,7 +466,7 @@ function goal(player, gate) {
 
 function pegar_diamante(player, diamante) {
   diamante.disableBody(true, true);
-  contador =+ 1
+  contador += 1
   console.log(contador)
 }
 
